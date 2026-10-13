@@ -1,0 +1,45 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/1/Mux.hdl
+/** 
+ * Multiplexor:
+ * if (sel = 0) out = a, else out = b
+ */
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+    Not(in=sel, out=notSel);
+    And(a=a, b=notSel, out=aAndNotSel);
+    And(a=b, b=sel, out=bAndSel);
+    Or(a=aAndNotSel, b=bAndSel, out=out);
+
+   
+    // Step 1: Create inverted versions of every input
+    //Not(in=a, out=notA);
+    //Not(in=b, out=notB);
+    //Not(in=sel, out=notSel);
+
+    // --- Term 1: a=1, b=0, sel=0 (Only 'a' is 1, sel picks 'a') ---
+    //And(a=a, b=notB, out=aAndNotB);
+    //And(a=aAndNotB, b=notSel, out=term1);
+
+    // --- Term 2: a=1, b=1, sel=0 (Both are 1, sel picks 'a') ---
+    //And(a=a, b=b, out=bothTruthy);
+    //And(a=bothTruthy, b=notSel, out=term2);
+
+    // --- Term 3: a=0, b=1, sel=1 (Only 'b' is 1, sel picks 'b') ---
+    //And(a=notA, b=b, out=notAAndB);
+    //And(a=notAAndB, b=sel, out=term3);
+
+    // --- Term 4: a=1, b=1, sel=1 (Both are 1, sel picks 'b') ---
+    //And(a=bothTruthy, b=sel, out=term4);
+
+    // Step 2: Combine all 4 valid conditions
+    //Or(a=term1, b=term2, out=matchA);
+    //Or(a=term3, b=term4, out=matchB);
+    //Or(a=matchA, b=matchB, out=out);
+}
+    
